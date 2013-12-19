@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+<head>
+<title>2D WebGL</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+
+<body onload = "main()">
+   <div id="canvasDiv">
+      <p id="p1">__________CANVAS BELOW__________</p>
+      <canvas id="canvas"
+         width="400" height="300" style="border:1px solid #777777;"></canvas>
+      <p id="p2">==========CANVAS ABOVE==========</p>
+   </div>
+
+
+<!-- ****************************************
+     *** Shaders
+     **************************************** -->
+<div id="shaders">
+<script id="2d-vertex-shader" type="x-shader/x-vertex">
+attribute vec2 a_position;
+uniform vec2 u_resolution;
+
+void main() {
+   vec2 scaledPos = a_position / u_resolution;
+   gl_Position = vec4(scaledPos, 0, 1);
+}
+</script>
+
+<script id="2d-fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+uniform vec4 u_color;
+
+void main() {
+   gl_FragColor = u_color;
+}
+</script>
+</div>
+
+
+<!-- ****************************************
+     *** Utils
+     **************************************** -->
+
+<script type="text/javascript" src="webgl-ut.js"></script>
+
+
+<!-- ****************************************
+     *** Main script
+     **************************************** -->
+
+<script type="text/javascript" src="canvas-tut5.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
