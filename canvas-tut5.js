@@ -1,17 +1,47 @@
 var canvas, gl, program, screenRes;
 var bgCol, rectCol;
+var canvasWidth = 400;
+var canvasHeight = 300;
 var screenResx = 20;
 var lastTime = 0;
 var fpsNow = 0.0;
 var fpsCounter;
+var vShader="";
+var fShader="";
+
+function getShaderText() {
+
+   vShader=
+"attribute vec2 a_position; " +
+"uniform vec2 u_resolution; " +
+"void main(){ " +
+"vec2 scaledPos = a_position / u_resolution; " +
+"gl_Position = vec4(scaledPos, 0, 1); " +
+"}";
+
+   fShader=
+"precision mediump float; " +
+"uniform vec4 u_color; " +
+"void main() { " +
+"gl_FragColor = u_color; " +
+"}";
+
+}
+
+function setCanvas() {
+   canvas.width = canvasWidth;
+   canvas.height = canvasHeight;
+}
 
 function init() {
    canvas = document.getElementById( "canvas" );
+   setCanvas();
    gl = getWebGLContext( canvas );
    if (!gl) { return; }
 
-   var vertexShader = loadShader( gl, "2d-vertex-shader" );
-   var fragmentShader = loadShader( gl, "2d-fragment-shader" );
+   getShaderText();
+   var vertexShader = setupShader( gl, vShader, "x-shader/x-vertex" );
+   var fragmentShader = setupShader( gl, fShader, "x-shader/x-fragment" );
 
    program = createProgram( gl, [vertexShader, fragmentShader] );
    gl.useProgram( program );
@@ -110,8 +140,8 @@ function animate() {
    updateCtr();
 
    rectCol = [0.1, 0.8, 0.8, 1.0];
-   for ( var ii = 0; ii < 10; ++ii) {
-      pix( ii * 2, 0, rectCol );
+   for ( var ii = 0; ii < 20; ++ii) {
+      pix( ii, ii, rectCol );
    }
 }
 
@@ -141,4 +171,3 @@ function main() {
 }
 
 // ********************************************** //
-
