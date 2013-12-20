@@ -78,11 +78,13 @@ function loadShader( gl, scriptID ) {
 
 function setupShader( gl, scriptText, type ) {
    var shaderSrc = scriptText;
-   var shaderType = type;
+   var shaderType;
 
-   if ( shaderScript.type == "x-shader/x-vertex" ) {
+   debug( type + " | " + shaderSrc, "canvasDiv" );
+
+   if ( type == "x-shader/x-vertex" ) {
       shaderType = gl.VERTEX_SHADER;
-   } else if ( shaderScript.type == "x-shader/x-fragment" ){
+   } else if ( type == "x-shader/x-fragment" ){
       shaderType = gl.FRAGMENT_SHADER;
    } else {
       throw( "Unknown shader type: " + scriptID );
